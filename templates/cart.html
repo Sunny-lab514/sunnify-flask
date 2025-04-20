@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #f54a2a; /* Orange navbar */
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+nav {
+    display: flex;
+    justify-content: center; 
+    gap: 20px;
+    flex: 1;
+}
+
+.search-container {
+    display: flex;
+    align-items: center; /* सर्च आइकन और इनपुट को वर्टिकली सेंटर करें */
+    margin-right: -17px; /* थोड़ा दायां मार्जिन */
+}
+
+.search-container input {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    width: 0;
+    opacity: 0;
+    transition: width 0.3s, opacity 0.3s;
+    visibility: hidden;
+}
+
+.search-container input.active {
+    width: 200px;
+    opacity: 1;
+    visibility: visible;
+}
+
+ .search-container i, .cart-icon img, .login-icon i {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-icon img, .login-icon i {
+            width: 30px;
+            height: auto;
+        }
+
+
+header .cart-icon {
+    margin-left: 20px; /* सर्च आइकन और कार्ट के बीच थोड़ी जगह */
+}
+
+       header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+       header img {
+            width: 30px; /* Adjust image size */
+            height: auto;
+        }
+     nav {
+    display: flex;
+    justify-content: center; /* Center alignment */
+    gap: 20px;
+    flex-grow: 1; /* Nav को उपलब्ध space का उपयोग करने की अनुमति देगा */
+}
+.actions {
+    display: flex;
+    align-items: center; /* सर्च और कार्ट आइकन को वर्टिकली सेंटर करें */
+    gap: 5px;}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+        header nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 1em;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: white;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #e63939;
+        }
+        .remove-btn {
+            background-color: #f5a623;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .remove-btn:hover {
+            background-color: #d4881f;
+        }
+        .empty-cart {
+            text-align: center;
+            font-size: 18px;
+            color: gray;
+            margin-top: 20px;
+        }
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close icon */
+.close {
+  color: #000;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Title */
+.modal-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Input styling */
+.modal-input {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Button styling */
+.modal-btn {
+  width: 100%;
+  background-color: #ff5722;
+  color: #fff;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.modal-btn:hover {
+  background-color: #e64a19;
+}    .close-btn {
+      cursor: pointer;
+      float: right;
+      font-size: 18px;
+    }
+    .modal-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    #loginModal {
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+#userInfoBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#userInfoModal {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  font-family: "Segoe UI", sans-serif;
+  animation: fadeIn 0.3s ease-in-out;
+}
+#userInfoModal strong {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 70px;
+}
+
+#userInfoModal strong {
+  color: #OOOOOO;
+}#userInfoModal strong span {
+  color: #f44336;
+}
+
+#userInfoButtons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+#userInfoModal button {
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 100px;
+  transition: all 0.2s ease;
+}
+
+#userInfoModal button.logout-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+#userInfoModal button.cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+#userInfoModal button:hover {
+  opacity: 0.9;
+}
+#userInfoModal button:first-of-type {
+  background-color: #f44336; /* Logout - Red */
+  color: white;
+}
+
+#userInfoModal button:last-of-type {
+  background-color: #e0e0e0; /* Cancel - Light Grey */
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.pmodal {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.pmodal.active {
+  display: block;
+}
+
+.pmodal h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.pmodal label {
+  display: block;
+  margin-bottom: 10px;
+  color: #444;
+  font-weight: 500;
+}
+
+.pmodal input,
+.pmodal select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.pmodal input:focus,
+.pmodal select:focus {
+  border-color: #f54a2a;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.cancel-btn,
+.ok-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background-color: #d5d5d5;
+}
+
+.ok-btn {
+  background-color: #f54a2a;
+  color: white;
+}
+
+.ok-btn:hover {
+  background-color: #e03d1f;
+}
+.prmodal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  width: 320px;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: left;
+}
+
+/* Active modal display */
+.prmodal.active {
+  display: block;
+}
+
+/* Dark transparent overlay */
+.proverlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.proverlay.active {
+  display: block;
+}
+</style>
+</head>
+<body>
+    <header>
+<div class="logo">Sunnify</div>
+<nav>
+<a href="index.html">HOME</a>
+<a href="products_newpage.html">PRODUCTS</a>
+<a href="features_newpage.html">FEATURES</a>
+<a href="about_newpage.html">ABOUT US</a>
+<a href="feedback_newpage.html">FEEDBACK</a>
+</nav>  
+<div class="actions">
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search for products..." onkeyup="searchProducts()">
+            <i class="fas fa-search" onclick="toggleSearchBar()"></i>
+        </div>
+        <a href="cart.html" class="cart-icon">
+            <img src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG38.png" alt="Cart Icon">
+        </a>
+<a id="loginIcon" class="login-icon">
+    <i class="fas fa-user"></i>
+</a>
+
+</div>    
+    </header>
+<div id="search-results">
+    <!-- Search results will be displayed here -->
+</div>
+<!-- Login Modal -->
+<div id="loginModalBackground" class="modal-background">
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeLoginModal">&times;</span>
+      <h2 class="modal-title">Login</h2>
+      <input type="email" placeholder="Enter Email" class="modal-input" id="loginEmail">
+      <input type="password" placeholder="Enter Password" class="modal-input" id="loginPassword">
+      <button class="modal-btn" id="loginBtn" onclick="handleLogin()">Login</button>
+    </div>
+  </div>
+</div>
+  <!-- User Info Modal -->
+  <div id="userInfoBackground" style="display: none;">
+  <div id="userInfoModal">
+        <strong>You are logged in as <span id="loggedUser"></span></strong>
+        <div id="userInfoButtons">
+        <button onclick="logout()">Logout</button>
+        <button onclick="closeUserInfoModal()">Cancel</button>
+      </div>
+    </div>
+   </div>
+<script>
+                const products = [
+            { name: "Fresh Brinjal", category: "vegetables" },
+            { name: "Fresh Apple", category: "fruits" },
+            { name: "Surf Excel", category: "cleaning" },
+            { name: "Cake", category: "bakery" },
+
+           // Add more products here...
+        ];
+
+        const categoryPages = {
+            vegetables: "vegetable_newpage.html",
+            fruits: "fruits_newpage.html",
+            cleaning: "cleaning_items_newpage.html",
+            bakery: "bakery_newpage.html",
+            // Add more categories as needed
+        };
+
+                function toggleSearchBar() {
+    const searchBar = document.getElementById("search-bar");
+    searchBar.classList.toggle("active");
+    if (searchBar.classList.contains("active")) {
+        searchBar.focus();
+    }
+}
+
+       
+        function searchProducts(event) {
+    const searchQuery = document.getElementById("search-bar").value.toLowerCase();
+    const searchResults = document.getElementById("search-results");
+    searchResults.innerHTML = "";  
+
+    const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchQuery));
+
+    if (filteredProducts.length > 0) {
+        filteredProducts.forEach(product => {
+            searchResults.innerHTML += `
+                <div class="product-card">
+                    <h3>${product.name}</h3>
+                    <p>Category: ${product.category}</p>
+                    <a href="${categoryPages[product.category]}" target="_blank">Go to Category</a>
+                </div>
+            `;
+        });
+    } else {
+        searchResults.innerHTML = "<p>No Available Products Related To Your Search</p>";
+    }
+
+                       if (event.key === "Enter") {
+                if (categoryPages[searchQuery]) {
+                    window.location.href = categoryPages[searchQuery];
+                } else {
+                    alert("Category page not available");
+                }
+            }
+        }
+ document.getElementById("loginIcon").addEventListener("click", function (event) {
+  event.preventDefault();
+  const token = localStorage.getItem("token");
+  const name = localStorage.getItem("name");
+
+  if (token && name) {
+    document.getElementById("loggedUser").innerText = name;
+    document.getElementById("userInfoBackground").style.display = "flex";
+  } else {
+    document.getElementById("loginModalBackground").style.display = "flex";
+  }
+});
+
+document.getElementById("closeLoginModal").addEventListener("click", function () {
+  document.getElementById("loginModalBackground").style.display = "none";
+});
+
+window.onclick = function (event) {
+  const modalBg = document.getElementById("loginModalBackground");
+  if (event.target === modalBg) {
+    modalBg.style.display = "none";
+  }
+};
+
+function cancel() {
+  document.getElementById("loginModalBackground").style.display = "none";
+}
+
+function closeUserInfoModal() {
+  document.getElementById("userInfoBackground").style.display = "none";
+  document.getElementById("loginModal").style.display = "none";
+}
+
+function logout() {
+  localStorage.clear();
+  alert("You have been logged out.");
+  window.location.href = "index.html";
+}
+
+document.getElementById("loginBtn").addEventListener("click", handleLogin);
+
+function handleLogin() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
+
+  fetch("http://localhost:5000/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  })
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Login failed");
+      loginSuccess(data.token, data.name, email);
+    })
+    .catch(() => {
+      signupUser(email, password);
+    });
+}
+
+function signupUser(email, password) {
+  if (!email || !password) {
+    alert("Email and Password cannot be empty.");
+    return;
+  }
+
+  let name = prompt("Enter your name to sign up:");
+  if (name === null || name.trim() === "") {
+    alert("Signup cancelled or invalid name.");
+    return;
+  }
+
+  name = name.trim();
+
+  fetch("http://localhost:5000/api/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, name }),
+  })
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Signup failed");
+      alert("Signup Successful! Logging you in...");
+      return fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+    })
+    .then(res => res.json())
+    .then(data => loginSuccess(data.token, data.name, email))
+    .catch(err => {
+      alert("Signup or Login failed. Please try again.");
+      console.error(err);
+    });
+}
+
+function loginSuccess(token, name, email) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("name", name);
+  localStorage.setItem("email", email); //  Save email for later fetch
+
+  fetch("http://localhost:5000/api/get_user_by_token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token, email }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        localStorage.setItem("user_id", data.user_id);
+        alert("Login Successful!");
+        document.getElementById("loggedUser").innerText = name;
+        document.getElementById("userInfoBackground").style.display = "flex";
+        document.getElementById("loginModalBackground").style.display = "none";
+        document.getElementById("loginIcon").innerHTML = '<i class="fas fa-user-check"></i>';
+      } else {
+        throw new Error("Failed to get user data");
+      }
+    })
+    .catch(err => {
+      console.error("Login success but user info fetch failed:", err);
+      alert("Login incomplete. Please refresh page.");
+    });
+}</script>
+
+    <div class="container">
+        <U><h2>Your Items in Cart</h2></U>
+        <div id="cart-items">
+            <!-- Items will be dynamically added here -->
+        </div>
+        <div id="total-section" style="margin-top: 20px; font-size: 18px; color: #333;"></div>
+        <button class="btn" id="buy-now-btn" style="display: none;">Buy Now All</button>
+<div class="proverlay" id="poverlay"></div>
+<div class="prmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod">
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div><!-- Second Modal: Address Selection -->
+<div class="pmodal" id="addressModal">
+  <h3>Select Your Address Manually</h3>
+  <form action="/confirm_order" method="post" id="addressForm" onsubmit="return false;">
+    <label>
+      Home/Street Address:
+      <input type="text" id="street" required placeholder="e.g., 123 Kalyanpur Street" name="street">
+    </label><br><br>
+
+    <label>
+      City/District:
+      <input type="text" id="city" required placeholder="e.g., Kalyanpur" name="city">
+    </label><br><br>
+
+    <label>
+      Pin Code:
+      <input type="text" id="pincode" required placeholder="e.g., 208017" name="pincode">
+    </label><br><br>
+
+    <label>
+      Select Your State:
+      <select id="state" name="state" required>
+        <option value="">--Select State--</option>
+        <option value="UP">Uttar Pradesh</option>
+        <option value="MH">Maharashtra</option>
+        <option value="DL">Delhi</option>
+        <!-- Add more states -->
+      </select>
+    </label><br><br>
+
+    <div class="modal-buttons">
+      <button type="button" class="cancel-btn" onclick="backToPaymentModal()">Cancel</button>
+      <button type="submit" class="ok-btn" onclick="confirmAddress(event)">Confirm</button>
+ </div>
+</form>
+</div>
+        <a href="#" class="btn" onclick="history.back(); return false;">Continue Shopping</a>
+        <button class="btn" id="remove-all-btn" style="display: none;" onclick="removeAllItems()">Remove All</button>
+    </div>
+
+<script>
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartItemsContainer = document.getElementById('cart-items');
+  const removeAllBtn = document.getElementById('remove-all-btn');
+  let totalPrice = 0; // Global
+  let selectedAmount = 0;
+  let selectedProduct = "";
+  let selectedProductId = 0;
+
+  function displayCart() {
+    cartItemsContainer.innerHTML = '';
+    let totalSection = document.getElementById('total-section');
+    let buyNowBtn = document.getElementById('buy-now-btn');
+
+    if (cartItems.length === 0) {
+      cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
+      removeAllBtn.style.display = 'none';
+      buyNowBtn.style.display = 'none';
+      totalSection.innerHTML = '';
+    } else {
+      totalPrice = 0;
+
+      cartItems.forEach((item, index) => {
+        totalPrice += item.price * item.quantity;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerHTML = `
+          <span>${item.name}</span>
+          <span>Rs. ${item.price} x ${item.quantity}</span>
+          <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsContainer.appendChild(itemDiv);
+      });
+
+      totalSection.innerHTML = `<strong>Total Cost: Rs. ${totalPrice}</strong>`;
+      removeAllBtn.style.display = 'inline-block';
+      buyNowBtn.style.display = 'inline-block';
+    }
+  }
+
+  function removeFromCart(index) {
+    cartItems.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    displayCart();
+  }
+
+  function removeAllItems() {
+    localStorage.removeItem('cart');
+    cartItems.length = 0;
+    displayCart();
+  }
+
+  // On Buy Now All click
+  document.getElementById("buy-now-btn").addEventListener("click", () => {
+    openModal(totalPrice, "Your Cart Items", 9999);
+  });
+
+  // Modal handling (Same as your previous script)
+  function openModal(amount, productName, productId) {
+    selectedAmount = amount;
+    selectedProduct = productName;
+    selectedProductId = productId;
+    document.getElementById('pmodal').classList.add('active');
+    document.getElementById('poverlay').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('pmodal').classList.remove('active');
+    document.getElementById('poverlay').classList.remove('active');
+  }
+
+  function handleCancel() {
+    closeModal();
+  }
+
+  function handleOk() {
+    const token = localStorage.getItem("token");
+    const name = localStorage.getItem("name");
+
+    if (!token || !name) {
+      alert("Enter Login First");
+      closeModal();
+      document.getElementById("loginModalBackground").style.display = "flex";
+      return;
+    }
+
+    const selected = document.querySelector('input[name="payment"]:checked')?.value;
+
+    if (!selected) {
+      alert("Please select a payment method.");
+      return;
+    }
+
+    if (selected === "cod") {
+      closeModal();
+      document.getElementById("addressModal").classList.add("active");
+    } else if (selected === "online") {
+      const options = {
+        key: "rzp_test_yBpkE6BX1ec9ll",
+        amount: selectedAmount * 100,
+        currency: "INR",
+        name: "Sunnify Store",
+        description: selectedProduct,
+        handler: function (response) {
+          alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+          document.getElementById("addressModal").classList.add("active");
+        },
+        prefill: {
+          name: name || "Customer",
+          email: localStorage.getItem("email") || "customer@example.com"
+        },
+        theme: {
+          color: "#f54a2a"
+        }
+      };
+      const rzp1 = new Razorpay(options);
+      rzp1.open();
+      closeModal();
+    }
+  }
+
+  function backToPaymentModal() {
+    document.getElementById("addressModal").classList.remove("active");
+    document.getElementById("pmodal").classList.add("active");
+  }
+
+async function confirmAddress(event) {
+  event.preventDefault();
+
+  const token = localStorage.getItem("token");
+  let user_name = localStorage.getItem("name");
+  let user_email = localStorage.getItem("email");
+  let user_id = localStorage.getItem("user_id");
+
+  //  WAIT LOOP for user_id if it's missing
+  if (token && (!user_id || !user_email)) {
+    try {
+      const res = await fetch("http://localhost:5000/api/get_user_by_token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, email: user_email }),
+      });
+
+      const data = await res.json();
+      if (data.status === "success") {
+        user_email = data.email;
+        user_id = data.user_id;
+
+        localStorage.setItem("email", user_email);
+        localStorage.setItem("user_id", user_id);
+      }
+    } catch (err) {
+      console.error("User info fetch failed:", err);
+    }
+  }
+
+  // Wait briefly until user_id exists in localStorage
+  let waitTries = 0;
+  while ((!user_id || !user_email || !user_name) && waitTries < 10) {
+    await new Promise(r => setTimeout(r, 100)); // wait 100ms
+    user_id = localStorage.getItem("user_id");
+    user_email = localStorage.getItem("email");
+    user_name = localStorage.getItem("name");
+    waitTries++;
+  }
+
+  //  Final check
+  if (!user_name || !user_email || !user_id) {
+    alert("User not logged in properly. Please login again.");
+    return;
+  }
+
+  const street = document.getElementById("street").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const state = document.getElementById("state").value.trim();
+  const pincode = document.getElementById("pincode").value.trim();
+
+  const address = { street, city, state, pincode, user_name, user_email, user_id };
+  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+  fetch("http://localhost:5000/cart_checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ address, cartItems }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        alert("Order placed successfully! Arriving in 15 minutes...(continue to shop)");
+        localStorage.removeItem("cart");
+        window.location.href = "cart.html";
+      } else if (data.status === "out_of_range") {
+        alert("You are out of range. Delivery is not possible yet there...");
+      } else {
+        alert("Something went wrong!");
+      }
+    })
+    .catch(err => {
+      console.error("Checkout error:", err);
+      alert("Server error!");
+    });
+}
+displayCart();
+// Auto-check on page load
+window.onload = function () {
+  const token = localStorage.getItem("token");
+  const email = localStorage.getItem("email");
+
+  if (token && email) {
+    fetch("http://localhost:5000/api/get_user_by_token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, email }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          localStorage.setItem("user_id", data.user_id);
+          localStorage.setItem("email", data.email);
+          document.getElementById("loginIcon").innerHTML = '<i class="fas fa-user-check"></i>';
+          const name = localStorage.getItem("name");
+          if (name) document.getElementById("loggedUser").innerText = name;
+        }
+      })
+      .catch(err => {
+        console.error("User fetch failed:", err);
+      });
+  }
+};
+</script>
+</body>
+</html>

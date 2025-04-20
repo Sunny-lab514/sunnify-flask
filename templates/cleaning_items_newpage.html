@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Store - Cleaning & Household</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>    
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        /* Header styling */
+       header {
+            background-color: #f54a2a; /* Orange navbar */
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+nav {
+    display: flex;
+    justify-content: center; 
+    gap: 20px;
+    flex: 1;
+}
+
+.search-container {
+    display: flex;
+    align-items: center; 
+    margin-right: -17px; 
+}
+
+.search-container input {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    width: 0;
+    opacity: 0;
+    transition: width 0.3s, opacity 0.3s;
+    visibility: hidden;
+}
+
+.search-container input.active {
+    width: 200px;
+    opacity: 1;
+    visibility: visible;
+}
+
+ .search-container i, .cart-icon img, .login-icon i {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-icon img, .login-icon i {
+            width: 30px;
+            height: auto;
+        }
+
+header .cart-icon {
+    margin-left: 20px; 
+}
+
+       header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+       header img {
+            width: 30px; /* Adjust image size */
+            height: auto;
+        }
+     nav {
+    display: flex;
+    justify-content: center; /* Center alignment */
+    gap: 20px;
+    flex-grow: 1; 
+}
+.actions {
+    display: flex;
+    align-items: center; 
+    gap: 5px;}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+        header nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 1em;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+text-align: center;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .product-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+        .product-card h3 {
+            font-size: 18px;
+            color: #333;
+            margin: 10px 0;
+        }
+        .product-card p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .stars {
+            color: #ff9800;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: white;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #e63939;
+        }
+footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close icon */
+.close {
+  color: #000;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Title */
+.modal-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Input styling */
+.modal-input {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Button styling */
+.modal-btn {
+  width: 100%;
+  background-color: #ff5722;
+  color: #fff;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.modal-btn:hover {
+  background-color: #e64a19;
+}    .close-btn {
+      cursor: pointer;
+      float: right;
+      font-size: 18px;
+    }
+    .modal-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    #loginModal {
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+#userInfoBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#userInfoModal {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  font-family: "Segoe UI", sans-serif;
+  animation: fadeIn 0.3s ease-in-out;
+}
+#userInfoModal strong {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 70px;
+}
+
+#userInfoModal strong {
+  color: #OOOOOO;
+}#userInfoModal strong span {
+  color: #f44336;
+}
+
+#userInfoButtons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+#userInfoModal button {
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 100px;
+  transition: all 0.2s ease;
+}
+
+#userInfoModal button.logout-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+#userInfoModal button.cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+#userInfoModal button:hover {
+  opacity: 0.9;
+}
+#userInfoModal button:first-of-type {
+  background-color: #f44336; /* Logout - Red */
+  color: white;
+}
+
+#userInfoModal button:last-of-type {
+  background-color: #e0e0e0; /* Cancel - Light Grey */
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}  
+.buy-now {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: white;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .buy-now:hover {
+            background-color: #e63939;
+        }
+  /* Modal box */
+.prmodal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  width: 320px;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: left;
+}
+
+/* Active modal display */
+.prmodal.active {
+  display: block;
+}
+
+/* Dark transparent overlay */
+.proverlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.proverlay.active {
+  display: block;
+}
+
+/* Button area */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Button styles */
+.cancel-btn,
+.ok-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.ok-btn {
+  background-color: #f54a2a;
+  color: white;
+  font-weight: 500;
+}
+
+/* Hint under Online option */
+.hint-text {
+  font-size: 12px;
+  color: #777;
+  margin-left: 25px;
+  margin-top: 4px;
+}
+.pmodal {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.pmodal.active {
+  display: block;
+}
+
+.pmodal h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.pmodal label {
+  display: block;
+  margin-bottom: 10px;
+  color: #444;
+  font-weight: 500;
+}
+
+.pmodal input,
+.pmodal select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.pmodal input:focus,
+.pmodal select:focus {
+  border-color: #f54a2a;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.cancel-btn,
+.ok-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background-color: #d5d5d5;
+}
+
+.ok-btn {
+  background-color: #f54a2a;
+  color: white;
+}
+
+.ok-btn:hover {
+  background-color: #e03d1f;
+}
+</style>
+</head>
+<body>
+    <header><div class="logo">Sunnify</div>
+<nav>
+<a href="index.html">HOME</a>
+<a href="products_newpage.html">PRODUCTS</a>
+<a href="features_newpage.html">FEATURES</a>
+<a href="about_newpage.html">ABOUT US</a>
+<a href="feedback_newpage.html">FEEDBACK</a>
+</nav>  
+<div class="actions">
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search for products..." onkeyup="searchProducts()">
+            <i class="fas fa-search" onclick="toggleSearchBar()"></i>
+        </div>
+        <a href="cart.html" class="cart-icon">
+            <img src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG38.png" alt="Cart Icon">
+        </a>
+<a id="loginIcon" class="login-icon">
+    <i class="fas fa-user"></i>
+</a>
+</div>    
+  
+            </header>
+<div id="search-results">
+    <!-- Search results will be displayed here -->
+</div>
+<!-- Login Modal -->
+<div id="loginModalBackground" class="modal-background">
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeLoginModal">&times;</span>
+      <h2 class="modal-title">Login</h2>
+      <input type="email" placeholder="Enter Email" class="modal-input" id="loginEmail">
+      <input type="password" placeholder="Enter Password" class="modal-input" id="loginPassword">
+      <button class="modal-btn" id="loginBtn" onclick="handleLogin()">Login</button>
+    </div>
+  </div>
+</div>
+  <!-- User Info Modal -->
+  <div id="userInfoBackground" style="display: none;">
+  <div id="userInfoModal">
+        <strong>You are logged in as <span id="loggedUser"></span></strong>
+        <div id="userInfoButtons">
+        <button onclick="logout()">Logout</button>
+        <button onclick="closeUserInfoModal()">Cancel</button>
+      </div>
+    </div>
+   </div>
+<script>
+                const products = [
+            { name: "Fresh Brinjal", category: "vegetables" },
+            { name: "Fresh Apple", category: "fruits" },
+            { name: "Surf Excel", category: "cleaning" },
+            { name: "Cake", category: "bakery" },
+
+           // Add more products here...
+        ];
+
+        const categoryPages = {
+            vegetables: "vegetable_newpage.html",
+            fruits: "fruits_newpage.html",
+            cleaning: "cleaning_items_newpage.html",
+            bakery: "bakery_newpage.html",
+            // Add more categories as needed
+        };
+
+                function toggleSearchBar() {
+    const searchBar = document.getElementById("search-bar");
+    searchBar.classList.toggle("active");
+    if (searchBar.classList.contains("active")) {
+        searchBar.focus();
+    }
+}
+
+       
+        function searchProducts(event) {
+    const searchQuery = document.getElementById("search-bar").value.toLowerCase();
+    const searchResults = document.getElementById("search-results");
+    searchResults.innerHTML = "";  
+
+    const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchQuery));
+
+    if (filteredProducts.length > 0) {
+        filteredProducts.forEach(product => {
+            searchResults.innerHTML += `
+                <div class="product-card">
+                    <h3>${product.name}</h3>
+                    <p>Category: ${product.category}</p>
+                    <a href="${categoryPages[product.category]}" target="_blank">Go to Category</a>
+                </div>
+            `;
+        });
+    } else {
+        searchResults.innerHTML = "<p>No Available Products Related To Your Search</p>";
+    }
+
+                       if (event.key === "Enter") {
+                if (categoryPages[searchQuery]) {
+                    window.location.href = categoryPages[searchQuery];
+                } else {
+                    alert("Category page not available");
+                }
+            }
+        }
+ document.getElementById("loginIcon").addEventListener("click", function (event) {
+  event.preventDefault();
+  const token = localStorage.getItem("token");
+  const name = localStorage.getItem("name");
+
+  if (token && name) {
+    document.getElementById("loggedUser").innerText = name;
+    document.getElementById("userInfoBackground").style.display = "flex";
+  } else {
+    document.getElementById("loginModalBackground").style.display = "flex";
+  }
+});
+
+document.getElementById("closeLoginModal").addEventListener("click", function () {
+  document.getElementById("loginModalBackground").style.display = "none";
+});
+
+window.onclick = function (event) {
+  const modalBg = document.getElementById("loginModalBackground");
+  if (event.target === modalBg) {
+    modalBg.style.display = "none";
+  }
+};
+
+function cancel() {
+  document.getElementById("loginModalBackground").style.display = "none";
+}
+
+function closeUserInfoModal() {
+  document.getElementById("userInfoBackground").style.display = "none";
+  document.getElementById("loginModal").style.display = "none";
+}
+
+function logout() {
+  localStorage.clear();
+  alert("You have been logged out.");
+  window.location.href = "index.html";
+}
+
+document.getElementById("loginBtn").addEventListener("click", handleLogin);
+
+function handleLogin() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
+
+  fetch("http://localhost:5000/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  })
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Login failed");
+      loginSuccess(data.token, data.name, email);
+    })
+    .catch(() => {
+      signupUser(email, password);
+    });
+}
+
+function signupUser(email, password) {
+  if (!email || !password) {
+    alert("Email and Password cannot be empty.");
+    return;
+  }
+
+  let name = prompt("Enter your name to sign up:");
+  if (name === null || name.trim() === "") {
+    alert("Signup cancelled or invalid name.");
+    return;
+  }
+
+  name = name.trim();
+
+  fetch("http://localhost:5000/api/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, name }),
+  })
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Signup failed");
+      alert("Signup Successful! Logging you in...");
+      return fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+    })
+    .then(res => res.json())
+    .then(data => loginSuccess(data.token, data.name, email))
+    .catch(err => {
+      alert("Signup or Login failed. Please try again.");
+      console.error(err);
+    });
+}
+
+function loginSuccess(token, name, email) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("name", name);
+  localStorage.setItem("email", email); //  Save email for later fetch
+
+  fetch("http://localhost:5000/api/get_user_by_token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token, email }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        localStorage.setItem("user_id", data.user_id);
+        alert("Login Successful!");
+        document.getElementById("loggedUser").innerText = name;
+        document.getElementById("userInfoBackground").style.display = "flex";
+        document.getElementById("loginModalBackground").style.display = "none";
+        document.getElementById("loginIcon").innerHTML = '<i class="fas fa-user-check"></i>';
+      } else {
+        throw new Error("Failed to get user data");
+      }
+    })
+    .catch(err => {
+      console.error("Login success but user info fetch failed:", err);
+      alert("Login incomplete. Please refresh page.");
+    });
+}
+</script>
+
+    <div class="container">
+
+   <h2><span style="color: red;">Cleaning & Household</span></h2>
+        <div class="container">
+     <div class="product-grid">
+            <!-- Product 1 -->
+                <div class="product-card" data-id="49">
+                <img src="https://www.uke-jhb.co.za/wp-content/uploads/2019/10/COMFORT-FABRIC-CONDITIONER-INTENSE-PASSION-60-WASH-900ML.jpg" alt="Comfort Fabric Conditioner">
+                <h3>Comfort Fabric Conditioner</h3>
+                <p>₹220 (800ml)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(220, 'Comfort Fabric Conditioner', 49)">Buy Now</button>
+ <div class="proverlay" id="poverlay"></div>
+<div class="prmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div><!-- Second Modal: Address Selection -->
+<div class="pmodal" id="addressModal">
+  <h3>Select Your Address Manually</h3>
+  <form action="/confirm_order" method="post" id="addressForm" onsubmit="return false;">
+    <label>
+      Home/Street Address:
+      <input type="text" id="street" required placeholder="e.g., 123 Kalyanpur Street" name="street">
+    </label><br><br>
+
+    <label>
+      City/District:
+      <input type="text" id="city" required placeholder="e.g., Kalyanpur" name="city">
+    </label><br><br>
+
+    <label>
+      Pin Code:
+      <input type="text" id="pincode" required placeholder="e.g., 208017" name="pincode">
+    </label><br><br>
+
+    <label>
+      Select Your State:
+      <select id="state" name="state" required>
+        <option value="">--Select State--</option>
+        <option value="UP">Uttar Pradesh</option>
+        <option value="MH">Maharashtra</option>
+        <option value="DL">Delhi</option>
+        <!-- Add more states -->
+      </select>
+    </label><br><br>
+
+    <div class="modal-buttons">
+      <button type="button" class="cancel-btn" onclick="backToPaymentModal()">Cancel</button>
+      <button type="submit" class="ok-btn" onclick="confirmAddress(event)">Confirm</button>
+ </div>
+</form>
+</div>
+ </div>
+
+             <!-- Product 2 -->
+                <div class="product-card" data-id="50">
+                <img src="https://m.media-amazon.com/images/I/61CwN2uZ9yL._SL1000_.jpg" alt="Exo Dishwash Bar">
+                <h3>Exo Dishwash Bar</h3>
+                <p>₹35 (250g)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+           <button class="buy-now" onclick="openModal(35, 'Exo Dishwash Bar', 50)">Buy Now</button>
+  <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+
+             <!-- Product 3 -->
+            <div class="product-card" data-id="51">
+                <img src="https://aswaqrak.ae/pub/media/catalog/product/cache/9e61d75d633e5fc1a695bad0376a2475/6/2/6295120042069_2.jpg" alt="Dettol Floor Cleaner">
+                <h3>Dettol Floor Cleaner</h3>
+                <p>₹150 (500ml)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(150, 'Dettol Floor Cleaner', 51)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod">
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 4 -->
+             <div class="product-card" data-id="52">
+                <img src="https://res.fkhealthplus.com/incom/images/product/Exo-Safai-Stainless-Steel-Scrubber-1591946087-10047301-1.jpg" alt="Exo Steel Scrubber">
+                <h3>Exo Steel Scrubber</h3>
+                <p>₹30 (1 unit)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(30, 'Exo Steel Scrubber', 52)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 5 -->
+           <div class="product-card" data-id="53">
+                <img src="https://apnafoodmarket.com/wp-content/uploads/2020/05/harpic.jpg" alt="Harpic Toilet Cleaner">
+                <h3>Harpic Toilet Cleaner</h3>
+                <p>₹120 (500ml)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(120, 'Harpic Toilet Cleaner', 53)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 6 -->
+            <div class="product-card" data-id="54">
+                <img src="https://5.imimg.com/data5/SELLER/Default/2021/6/WE/YN/VG/11198572/vim-liquid-dishwash-1000x1000.jpg" alt="Vim Dishwash Liquid">
+                <h3>Vim Dishwash Liquid</h3>
+                <p>₹110 (750ml)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(110, 'Vim Dishwash Liquid', 54)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 7 -->
+           <div class="product-card" data-id="55">
+                <img src="https://newassets.apollo247.com/pub/media/catalog/product/f/l/floral_1l_front.png" alt="Lizol Floor Cleaner">
+                <h3>Lizol Floor Cleaner</h3>
+                <p>₹180 (975ml)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(180, 'Lizol Floor Cleaner', 55)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 8 -->
+             <div class="product-card" data-id="56">
+                <img src="https://media.jointlook.com/customPhotos/productImages/colin-glass-surface-cleaner-liquid-spray-JLHGCL250-01.jpg" alt="Colin Glass Cleaner">
+                <h3>Colin Glass Cleaner</h3>
+                <p>₹90 (500ml)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(90, 'Colin Glass Cleaner', 56)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 9 -->
+            <div class="product-card" data-id="57">
+                <img src="https://www.buy-pharma.md/img/uploads/10375-Himalaya-Gentle-Exfoliating-Daily-Face-Wash.jpg" alt="Himalaya Gentle Wash">
+                <h3>Himalaya Gentle Wash</h3>
+                <p>₹200 (1L)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(200, 'Himalaya Gentle Wash', 57)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 10 -->
+             <div class="product-card" data-id="58">
+                <img src="https://www.kroger.com/product/images/large/front/0003700040213" alt="Tide Detergent">
+                <h3>Tide Detergent</h3>
+                <p>₹340 (2kg)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(340, 'Tide Detergent', 58)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 11 -->
+            <div class="product-card" data-id="59">
+                <img src="https://static.condisline.com/resize_1280x1347/images/catalog/large/812347.jpg" alt="Ariel Detergent">
+                <h3>Ariel Detergent</h3>
+                <p>₹380 (2kg)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(380, 'Ariel Detergent', 59)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 12 -->
+            <div class="product-card" data-id="60">
+                <img src="https://whim.com.mv/web/image/product.template/4200/image_1024?unique=e2d3886" alt="Pril Dishwash Gel">
+                <h3>Pril Dishwash Gel</h3>
+                <p>₹130 (750ml)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(130, 'Pril Dishwash Gel', 60)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 13 -->
+            <div class="product-card" data-id="61">
+                <img src="https://www.vshop.sg/wp-content/uploads/2022/06/surf_excel.jpg" alt="Surf Excel">
+                <h3>Surf Excel</h3>
+                <p>₹400 (2kg)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(400, 'Surf Excel', 61)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 14 -->
+            <div class="product-card" data-id="62">
+                <img src="https://udaan.azureedge.net/products/zwmfkx34tmtrvh5up5q4.469Z" alt="Nirma Detergent">
+                <h3>Nirma Detergent</h3>
+                <p>₹180 (1kg)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(180, 'Nirma Detergent', 62)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 15 -->
+           <div class="product-card" data-id="63">
+                <img src="https://5.imimg.com/data5/PC/SU/QU/SELLER-8586032/good-night-power-activ-1000x1000.png" alt="Good Knight Mosquito Repellent">
+                <h3>Good Knight Mosquito Repellent</h3>
+                <p>₹120 (45ml)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(120, 'Good Knight Mosquito Repellent', 63)">Buy Now</button>
+ <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+            <!-- Product 16 -->
+             <div class="product-card" data-id="64">
+                <img src="https://www.jiomart.com/images/product/600x600/491348878/odonil-room-freshener-spray-170-ml-buy-2-get-1-free-product-images-o491348878-p491348878-0-202203170208.jpg" alt="Odonil Room Freshener">
+                <h3>Odonil Room Freshener</h3>
+                <p>₹80 (50g)</p>
+                <div class="stars">★★★★★</div>
+                <a href="cart.html" class="btn">Add to Cart</a>
+            <button class="buy-now" onclick="openModal(80, 'Odonil Room Freshener', 64)">Buy Now</button>
+            <div class="poverlay" id="poverlay"></div>
+<div class="pmodal" id="pmodal">
+  <h3>Select Mode of Transaction</h3>
+  <label>
+    <input type="radio" name="payment" value="cod" >
+    Cash on Delivery
+  </label><br>
+  <label>
+    <input type="radio" name="payment" value="online">
+    Online
+    <div class="hint-text">for better experience</div>
+  </label><br><br>
+  <div class="modal-buttons">
+    <button class="cancel-btn" onclick="handleCancel()">Cancel</button>
+    <button class="ok-btn" onclick="handleOk()">OK</button>
+  </div>
+</div> </div>
+        </div>
+    </div>
+    <footer>
+        Created by Shop With Sunny | All Rights Reserved
+    </footer>
+<script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const productCard = button.closest('.product-card');
+            const productId = parseInt(productCard.dataset.id); 
+            const productName = productCard.querySelector('h3').textContent;
+            const productPrice = parseFloat(
+                productCard.querySelector('p').textContent.match(/₹\s?([\d.]+)/)[1]
+            );
+
+            const existingItem = cart.find(item => item.product_id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ product_id: productId, name: productName, price: productPrice, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${productName} added to cart!`);
+        });
+    });
+let selectedAmount = 0;
+let selectedProduct = "";
+let selectedProductId = 0;
+
+//  Open payment modal
+function openModal(amount, productName, productId) {
+  selectedAmount = amount;
+  selectedProduct = productName;
+  selectedProductId = productId;
+  document.getElementById('pmodal').classList.add('active');
+  document.getElementById('poverlay').classList.add('active');
+}
+
+//  Close payment modal
+function closeModal() {
+  document.getElementById('pmodal').classList.remove('active');
+  document.getElementById('poverlay').classList.remove('active');
+}
+
+//  Cancel button
+function handleCancel() {
+  closeModal();
+}
+
+//  Continue to payment or COD
+function handleOk() {
+  const token = localStorage.getItem("token");
+  const name = localStorage.getItem("name");
+
+  if (!token || !name) {
+    alert("Enter Login First");
+    closeModal();
+    document.getElementById("loginModalBackground").style.display = "flex";
+    return;
+  }
+
+  const selected = document.querySelector('input[name="payment"]:checked')?.value;
+
+  if (!selected) {
+    alert("Please select a payment method.");
+    return;
+  }
+
+  if (selected === "cod") {
+    closeModal();
+    document.getElementById("addressModal").classList.add("active");
+  } else if (selected === "online") {
+    const options = {
+      "key": "rzp_test_yBpkE6BX1ec9ll",
+      "amount": selectedAmount * 100,
+      "currency": "INR",
+      "name": "Sunnify Store",
+      "description": selectedProduct,
+      "handler": function (response) {
+        alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+        document.getElementById("addressModal").classList.add("active");
+      },
+      "prefill": {
+        "name": name || "Customer",
+        "email": localStorage.getItem("email") || "customer@example.com"
+      },
+      "theme": {
+        "color": "#f54a2a"
+      }
+    };
+    const rzp1 = new Razorpay(options);
+    rzp1.open();
+
+    closeModal();
+  }
+}
+
+//  Close address form
+function closeAddressModal() {
+  document.getElementById("addressModal").classList.remove("active");
+}
+
+//  Go back to payment options
+function backToPaymentModal() {
+  document.getElementById("addressModal").classList.remove("active");
+  document.getElementById("pmodal").classList.add("active");
+}
+
+//  Confirm order with address
+async function confirmAddress(event) {
+  event.preventDefault();
+
+  const token = localStorage.getItem("token");
+  let user_name = localStorage.getItem("name");
+  let user_email = localStorage.getItem("email");
+  let user_id = localStorage.getItem("user_id");
+
+  //  WAIT LOOP for user_id if it's missing
+  if (token && (!user_id || !user_email)) {
+    try {
+      const res = await fetch("http://localhost:5000/api/get_user_by_token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, email: user_email }),
+      });
+
+      const data = await res.json();
+      if (data.status === "success") {
+        user_email = data.email;
+        user_id = data.user_id;
+
+        localStorage.setItem("email", user_email);
+        localStorage.setItem("user_id", user_id);
+      }
+    } catch (err) {
+      console.error("User info fetch failed:", err);
+    }
+  }
+
+  // Wait briefly until user_id exists in localStorage
+  let waitTries = 0;
+  while ((!user_id || !user_email || !user_name) && waitTries < 10) {
+    await new Promise(r => setTimeout(r, 100)); // wait 100ms
+    user_id = localStorage.getItem("user_id");
+    user_email = localStorage.getItem("email");
+    user_name = localStorage.getItem("name");
+    waitTries++;
+  }
+
+  //  Final check
+  if (!user_name || !user_email || !user_id) {
+    alert("User not logged in properly. Please login again.");
+    return;
+  }
+
+  const street = document.getElementById("street").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const state = document.getElementById("state").value.trim();
+  const pincode = document.getElementById("pincode").value.trim();
+ // Check if any field is empty
+  if (!street || !city || !state || !pincode) {
+    alert("Please fill in all address fields.");
+    return;
+  }
+
+  const data = {
+    street,
+    city,
+    state,
+    pincode,
+    product_id: selectedProductId,
+    user_name: localStorage.getItem("name"),
+    user_email: localStorage.getItem("email"),
+    user_id: localStorage.getItem("user_id")
+  };
+    fetch("http://localhost:5000/confirm_order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        alert("Order placed successfully! Arriving in 15 minutes... (continue to shop)");
+        window.location.href = "cleaning_items_newpage.html";
+      } else if (data.status === "out_of_range") {
+        alert("You are out of range. Delivery is not possible yet there...");
+      } else {
+        alert("Something went wrong!");
+      }
+    })
+    .catch(err => {
+      console.error("Fetch error:", err);
+      alert("Server error!");
+    });
+}
+// Auto-check on page load
+window.onload = function () {
+  const token = localStorage.getItem("token");
+  const email = localStorage.getItem("email");
+
+  if (token && email) {
+    fetch("http://localhost:5000/api/get_user_by_token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, email }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          localStorage.setItem("user_id", data.user_id);
+          localStorage.setItem("email", data.email);
+          document.getElementById("loginIcon").innerHTML = '<i class="fas fa-user-check"></i>';
+          const name = localStorage.getItem("name");
+          if (name) document.getElementById("loggedUser").innerText = name;
+        }
+      })
+      .catch(err => {
+        console.error("User fetch failed:", err);
+      });
+  }
+};
+</script>
+</body>
+</html>

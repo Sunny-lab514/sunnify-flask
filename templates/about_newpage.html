@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - E-Commerce Store</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        /* Header styling */
+       header {
+            background-color: #f54a2a; /* Orange navbar */
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+nav {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+    flex: 1; 
+}
+
+.search-container {
+    display: flex;
+    align-items: center; 
+    margin-right: -17px; 
+}
+
+.search-container input {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    width: 0;
+    opacity: 0;
+    transition: width 0.3s, opacity 0.3s;
+    visibility: hidden;
+}
+
+.search-container input.active {
+    width: 200px;
+    opacity: 1;
+    visibility: visible;
+}
+
+ .search-container i, .cart-icon img, .login-icon i {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-icon img, .login-icon i {
+            width: 30px;
+            height: auto;
+        }
+
+header .cart-icon {
+    margin-left: 20px; 
+}
+
+       header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+       header img {
+            width: 30px; /* Adjust image size */
+            height: auto;
+        }
+     nav {
+    display: flex;
+    justify-content: center; /* Center alignment */
+    gap: 20px;
+    flex-grow: 1; 
+}
+.actions {
+    display: flex;
+    align-items: center; 
+    gap: 5px;}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+        header nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 1em;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .about-header {
+            text-align: center;
+            background-color: #e60023;
+            color: white;
+            padding: 10px;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .column {
+            flex: 1;
+            margin: 10px;
+            min-width: 250px;
+        }
+        .column h3 {
+            color: #e60023;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            font-size: 0.9em;
+        }
+        .newsletter input[type="email"] {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+        .newsletter button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #e60023;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .social-icons a {
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .social-icons a:hover {
+            color: #e60023;
+        }
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close icon */
+.close {
+  color: #000;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Title */
+.modal-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Input styling */
+.modal-input {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Button styling */
+.modal-btn {
+  width: 100%;
+  background-color: #ff5722;
+  color: #fff;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.modal-btn:hover {
+  background-color: #e64a19;
+}    .close-btn {
+      cursor: pointer;
+      float: right;
+      font-size: 18px;
+    }
+    .modal-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    #loginModal {
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+#userInfoBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#userInfoModal {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  font-family: "Segoe UI", sans-serif;
+  animation: fadeIn 0.3s ease-in-out;
+}
+#userInfoModal strong {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 70px;
+}
+
+#userInfoModal strong {
+  color: #OOOOOO;
+}#userInfoModal strong span {
+  color: #f44336;
+}
+
+#userInfoButtons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+#userInfoModal button {
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 100px;
+  transition: all 0.2s ease;
+}
+
+#userInfoModal button.logout-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+#userInfoModal button.cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+#userInfoModal button:hover {
+  opacity: 0.9;
+}
+#userInfoModal button:first-of-type {
+  background-color: #f44336; /* Logout - Red */
+  color: white;
+}
+
+#userInfoModal button:last-of-type {
+  background-color: #e0e0e0; /* Cancel - Light Grey */
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+    <header>
+         <div class="logo">Sunnify</div>
+<nav>
+<a href="index.html">HOME</a>
+<a href="products_newpage.html">PRODUCTS</a>
+<a href="features_newpage.html">FEATURES</a>
+<a href="about_newpage.html">ABOUT US</a>
+<a href="feedback_newpage.html">FEEDBACK</a>
+</nav>    
+<div class="actions">
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search for products..." onkeyup="searchProducts()">
+            <i class="fas fa-search" onclick="toggleSearchBar()"></i>
+        </div>
+        <a href="cart.html" class="cart-icon">
+            <img src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG38.png" alt="Cart Icon">
+        </a>
+<a id="loginIcon" class="login-icon">
+    <i class="fas fa-user"></i>
+</a>
+</div>    
+ </header>
+<div id="search-results">
+    <!-- Search results will be displayed here -->
+</div>
+<!-- Login Modal -->
+<div id="loginModalBackground" class="modal-background">
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeLoginModal">&times;</span>
+      <h2 class="modal-title">Login</h2>
+      <input type="email" placeholder="Enter Email" class="modal-input" id="loginEmail">
+      <input type="password" placeholder="Enter Password" class="modal-input" id="loginPassword">
+      <button class="modal-btn" id="loginBtn" onclick="handleLogin()">Login</button>
+    </div>
+  </div>
+</div>
+  <!-- User Info Modal -->
+  <div id="userInfoBackground" style="display: none;">
+  <div id="userInfoModal">
+        <strong>You are logged in as <span id="loggedUser"></span></strong>
+        <div id="userInfoButtons">
+        <button onclick="logout()">Logout</button>
+        <button onclick="closeUserInfoModal()">Cancel</button>
+      </div>
+    </div>
+   </div>
+<script>
+                const products = [
+            { name: "Fresh Brinjal", category: "vegetables" },
+            { name: "Fresh Apple", category: "fruits" },
+            { name: "Surf Excel", category: "cleaning" },
+            { name: "Cake", category: "bakery" },
+
+           // Add more products here...
+        ];
+
+        const categoryPages = {
+            vegetables: "vegetable_newpage.html",
+            fruits: "fruits_newpage.html",
+            cleaning: "cleaning_items_newpage.html",
+            bakery: "bakery_newpage.html",
+            // Add more categories as needed
+        };
+
+                function toggleSearchBar() {
+    const searchBar = document.getElementById("search-bar");
+    searchBar.classList.toggle("active");
+    if (searchBar.classList.contains("active")) {
+        searchBar.focus();
+    }
+}   
+    function searchProducts(event) {
+    const searchQuery = document.getElementById("search-bar").value.toLowerCase();
+    const searchResults = document.getElementById("search-results");
+    searchResults.innerHTML = "";  
+
+    const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchQuery));
+
+    if (filteredProducts.length > 0) {
+        filteredProducts.forEach(product => {
+            searchResults.innerHTML += `
+                <div class="product-card">
+                    <h3>${product.name}</h3>
+                    <p>Category: ${product.category}</p>
+                    <a href="${categoryPages[product.category]}" target="_blank">Go to Category</a>
+                </div>
+            `;
+        });
+    } else {
+        searchResults.innerHTML = "<p>No Available Products Related To Your Search</p>";
+    }
+
+                       if (event.key === "Enter") {
+                if (categoryPages[searchQuery]) {
+                    window.location.href = categoryPages[searchQuery];
+                } else {
+                    alert("Category page not available");
+                }
+            }
+        }
+ document.getElementById("loginIcon").addEventListener("click", function (event) {
+  event.preventDefault();
+  const token = localStorage.getItem("token");
+  const name = localStorage.getItem("name");
+
+  if (token && name) {
+    document.getElementById("loggedUser").innerText = name;
+    document.getElementById("userInfoBackground").style.display = "flex";
+  } else {
+    document.getElementById("loginModalBackground").style.display = "flex";
+  }
+});
+
+document.getElementById("closeLoginModal").addEventListener("click", function () {
+  document.getElementById("loginModalBackground").style.display = "none";
+});
+
+window.onclick = function (event) {
+  const modalBg = document.getElementById("loginModalBackground");
+  if (event.target === modalBg) {
+    modalBg.style.display = "none";
+  }
+};
+
+function cancel() {
+  document.getElementById("loginModalBackground").style.display = "none";
+}
+
+function closeUserInfoModal() {
+  document.getElementById("userInfoBackground").style.display = "none";
+  document.getElementById("loginModal").style.display = "none";
+}
+
+function logout() {
+  localStorage.clear();
+  alert("You have been logged out.");
+  window.location.href = "index.html";
+}
+
+document.getElementById("loginBtn").addEventListener("click", handleLogin);
+
+function handleLogin() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
+
+  fetch("http://localhost:5000/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  })
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Login failed");
+      loginSuccess(data.token, data.name, email);
+    })
+    .catch(() => {
+      signupUser(email, password);
+    });
+}
+
+function signupUser(email, password) {
+  if (!email || !password) {
+    alert("Email and Password cannot be empty.");
+    return;
+  }
+
+  let name = prompt("Enter your name to sign up:");
+  if (name === null || name.trim() === "") {
+    alert("Signup cancelled or invalid name.");
+    return;
+  }
+
+  name = name.trim();
+
+  fetch("http://localhost:5000/api/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, name }),
+  })
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Signup failed");
+      alert("Signup Successful! Logging you in...");
+      return fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+    })
+    .then(res => res.json())
+    .then(data => loginSuccess(data.token, data.name, email))
+    .catch(err => {
+      alert("Signup or Login failed. Please try again.");
+      console.error(err);
+    });
+}
+
+function loginSuccess(token, name, email) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("name", name);
+  localStorage.setItem("email", email); //  Save email for later fetch
+
+  fetch("http://localhost:5000/api/get_user_by_token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token, email }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        localStorage.setItem("user_id", data.user_id);
+        alert("Login Successful!");
+        document.getElementById("loggedUser").innerText = name;
+        document.getElementById("userInfoBackground").style.display = "flex";
+        document.getElementById("loginModalBackground").style.display = "none";
+        document.getElementById("loginIcon").innerHTML = '<i class="fas fa-user-check"></i>';
+      } else {
+        throw new Error("Failed to get user data");
+      }
+    })
+    .catch(err => {
+      console.error("Login success but user info fetch failed:", err);
+      alert("Login incomplete. Please refresh page.");
+    });
+}
+function subscribeUser(event) {
+    event.preventDefault();  // <-- ye important hai
+
+    let email = document.getElementById("subscribeEmail").value;
+
+    if (!email) {
+        alert("Please enter an email address.");
+        return;
+    }
+
+    fetch("http://localhost:5000/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);  // Show server message
+    })
+    .catch(err => {
+        console.error("Subscription error:", err);
+        alert("Subscription failed. Try again later.");
+    });
+}
+
+</script>
+
+
+    <div class="container">
+        <div class="about-header">About Us</div>
+        <div class="content">
+            <div class="column">
+                <h3>Sunnify</h3>
+                <p>Sunnify allows you to walk away from drudgery of grocery shopping and welcome an easy relaxed way of browsing and shoppping for groceries.Discover new products and shop for all your food and grocery needs from the comfort of your home or office.</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com"><img src="https://www.freeiconspng.com/uploads/facebook-logo-3.png" alt="Facebook" width="20"></a>
+                    <a href="https://www.twitter.com"><img src="https://clipartcraft.com/images/twitter-logo-png-green-4.png" alt="Twitter" width="20"></a>
+                    <a href="https://www.instagram.com"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png" alt="Instagram" width="20"></a>
+                </div>
+            </div>
+            <div class="column">
+                <h3>Contact Info</h3>
+                <p>Phone: +123 456 789</p>
+                <p>Email: support@sunnify.com</p>
+                <p>Address: 123 Bithoor Street, NY, USA</p>
+            </div>
+            <div class="column newsletter">
+                <h3>Newsletter</h3>
+                <form action="#" method="post">
+                    <input type="email" id="subscribeEmail" name="email" placeholder="Enter your email" required>
+                    <button onclick="subscribeUser(event)" type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Created by Sunnify | All Rights Reserved
+    </footer>
+</body>
+</html>

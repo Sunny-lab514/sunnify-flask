@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, jsonify, session, url_for, render_template, flash
 from flask_cors import CORS
+import os
 import mysql.connector
 from flask_bcrypt import Bcrypt
 import razorpay
@@ -25,12 +26,11 @@ mail = Mail(app)
 # 🔹 Database Connection Function
 def get_db_connection():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Krishna@100",  # Agar password set kiya hai to yahan likho
-        database="sunnify_db"
+        host=os.environ.get("DB_HOST"),
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASSWORD"),
+        database=os.environ.get("DB_NAME")
     )
-
 
 bcrypt = Bcrypt(app)
 
@@ -138,10 +138,10 @@ jwt = JWTManager(app)
 
 # Connect to MySQL Database
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",  # MySQL username
-    password="Krishna@100",  # MySQL password
-    database="sunnify_db"
+    host=os.environ.get("DB_HOST"),
+    user=os.environ.get("DB_USER"),
+    password=os.environ.get("DB_PASSWORD"),
+    database=os.environ.get("DB_NAME")
 )
 cursor = db.cursor()
 # **Signup API**

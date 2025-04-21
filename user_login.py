@@ -38,7 +38,7 @@ bcrypt = Bcrypt(app)
 # 🔹 Home Route
 @app.route('/')
 def home():
-    return "Sunnify is Live!"
+    return render_template("index.html")
 
 # 🔹 User Registration API
 @app.route('/register', methods=['POST'])

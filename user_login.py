@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, jsonify, session, url_for, render_template, flash
 from flask_cors import CORS
-import os
 import mysql.connector
+import os
 from flask_bcrypt import Bcrypt
 import razorpay
 from flask_jwt_extended import JWTManager, create_access_token
@@ -26,10 +26,11 @@ mail = Mail(app)
 # 🔹 Database Connection Function
 def get_db_connection():
     return mysql.connector.connect(
-        host=os.environ.get("DB_HOST"),
-        user=os.environ.get("DB_USER"),
-        password=os.environ.get("DB_PASSWORD"),
-        database=os.environ.get("DB_NAME")
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME"),
+        port=os.getenv("DB_PORT") 
     )
 
 bcrypt = Bcrypt(app)
@@ -138,10 +139,11 @@ jwt = JWTManager(app)
 
 # Connect to MySQL Database
 db = mysql.connector.connect(
-    host=os.environ.get("DB_HOST"),
-    user=os.environ.get("DB_USER"),
-    password=os.environ.get("DB_PASSWORD"),
-    database=os.environ.get("DB_NAME")
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME"),
+    port=os.getenv("DB_PORT")  
 )
 cursor = db.cursor()
 # **Signup API**
@@ -522,5 +524,5 @@ def send_bulk_order_email(products, username, address, user_email):
 
 # **Run the Server**
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 

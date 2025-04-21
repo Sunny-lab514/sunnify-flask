@@ -516,18 +516,18 @@ footer {
     <header>
         <div class="logo">Sunnify</div>
 <nav>
-<a href="index.html">HOME</a>
-<a href="products_newpage.html">PRODUCTS</a>
-<a href="features_newpage.html">FEATURES</a>
-<a href="about_newpage.html">ABOUT US</a>
-<a href="feedback_newpage.html">FEEDBACK</a>
+<a href="{{ url_for('index') }}">HOME</a>
+<a href="{{ url_for('products') }}">PRODUCTS</a>
+<a href="{{ url_for('features') }}">FEATURES</a>
+<a href="{{ url_for('about') }}">ABOUT US</a>
+<a href="{{ url_for('feedback') }}">FEEDBACK</a>
 </nav>  
 <div class="actions">
         <div class="search-container">
             <input type="text" id="search-bar" placeholder="Search for products..." onkeyup="searchProducts()">
             <i class="fas fa-search" onclick="toggleSearchBar()"></i>
         </div>
-        <a href="cart.html" class="cart-icon">
+        <a href="{{ url_for('cart') }}" class="cart-icon">
             <img src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG38.png" alt="Cart Icon">
         </a>
 <a id="loginIcon" class="login-icon">
@@ -573,10 +573,10 @@ footer {
         ];
 
         const categoryPages = {
-            vegetables: "vegetable_newpage.html",
-            fruits: "fruits_newpage.html",
-            cleaning: "cleaning_items_newpage.html",
-            bakery: "bakery_newpage.html",
+            vegetables: "{{ url_for('vegetable') }}",
+            fruits: "{{ url_for('fruits') }}",
+            cleaning: "{{ url_for('cleaning') }}",
+            bakery: "{{ url_for('bakery') }}",
             // Add more categories as needed
         };
 
@@ -654,7 +654,7 @@ function closeUserInfoModal() {
 function logout() {
   localStorage.clear();
   alert("You have been logged out.");
-  window.location.href = "index.html";
+  window.location.href = "{{ url_for('index') }}";
 }
 
 document.getElementById("loginBtn").addEventListener("click", handleLogin);
@@ -760,7 +760,7 @@ function loginSuccess(token, name, email) {
   <h3>Fresh Brinjal</h3>
   <p>1kg - Rs.39.99</p>
   <div class="stars">★★★★★</div>
-  <a href="cart.html" class="btn">Add to Cart</a>
+  <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
   <button class="buy-now" onclick="openModal(39.99, 'Fresh Brinjal', 1)">Buy Now</button>
 <div class="proverlay" id="poverlay"></div>
 <div class="prmodal" id="pmodal">
@@ -821,7 +821,7 @@ function loginSuccess(token, name, email) {
                 <h3>Fresh Onion</h3>
                 <p>1kg - Rs.73.79</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(73.79, 'Fresh Onion', 2)">Buy Now</button>
 <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -847,7 +847,7 @@ function loginSuccess(token, name, email) {
                 <h3>Ladies Finger</h3>
                 <p>1kg - Rs.62.49</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(62.49, 'Lady Finger', 3)">Buy Now</button>
 <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -872,7 +872,7 @@ function loginSuccess(token, name, email) {
                 <h3>Fresh Cabbage</h3>
                 <p>Minimum 2 - Rs.30 each</p>
                 <div class="stars">★★★★★</div>
-                <a href= "cart.html" class="btn">Add to Cart</a>
+                <a href= "{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(60.00, 'Fresh Cabbage', 4)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -897,7 +897,7 @@ function loginSuccess(token, name, email) {
                 <h3>Fresh Broccoli</h3>
                 <p>1Kg - Rs. 120</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(120.00, 'Fresh Broccoli', 5)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="poverlay" id="poverlay"></div>
@@ -924,7 +924,7 @@ function loginSuccess(token, name, email) {
                 <h3>Green Chilli</h3>
                 <p>100g - Rs. 12.00</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(12.00, 'Green Chilli', 6)">Buy Now</button>
            <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -949,7 +949,7 @@ function loginSuccess(token, name, email) {
                 <h3>Capsicum Green</h3>
                 <p>250g - Rs. 40.00</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(40.00, 'Green Capsicum', 7)">Buy Now</button>
            <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -974,7 +974,7 @@ function loginSuccess(token, name, email) {
                 <h3>Capsicum Red</h3>
                 <p>250g - Rs. 37.00</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(37.99, 'Red Capsicum', 8)">Buy Now</button>
            <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -999,7 +999,7 @@ function loginSuccess(token, name, email) {
                 <h3>Capsicum Yellow</h3>
                 <p>250g - Rs. 39.00</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(39.00, 'Yellow Capsicum', 9)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -1024,7 +1024,7 @@ function loginSuccess(token, name, email) {
                 <h3>Fresh Tomato</h3>
                 <p>1Kg - Rs. 80.00</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(80.00, 'Fresh Tomato', 10)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="poverlay" id="poverlay"></div>
@@ -1050,7 +1050,7 @@ function loginSuccess(token, name, email) {
                 <h3>Beans</h3>
                 <p>250g - Rs. 25.00</p>
                 <div class="stars">★★★★★</div>
-                <a href= "cart.html" class="btn">Add to Cart</a>
+                <a href= "{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(25.00, 'Beans', 11)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="poverlay" id="poverlay"></div>
@@ -1077,7 +1077,7 @@ function loginSuccess(token, name, email) {
                 <h3>Ginger</h3>
                 <p>100g - Rs. 15.99</p>
                 <div class="stars">★★★★★</div>
-                <a href= "cart.html" class="btn">Add to Cart</a>
+                <a href= "{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(15.99, 'Ginger', 12)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -1102,7 +1102,7 @@ function loginSuccess(token, name, email) {
                 <h3>Bitter Gourd</h3>
                 <p>250g - Rs. 37.00</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
 <button class="buy-now" onclick="openModal(37.00, 'Bitter Gourd', 13)">Buy Now</button>
  <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -1127,7 +1127,7 @@ function loginSuccess(token, name, email) {
                 <h3>Potato</h3>
                 <p>1Kg - Rs. 20.00</p>
                 <div class="stars">★★★★★</div>
-                <a href= "cart.html" class="btn">Add to Cart</a>
+                <a href= "{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(20.00, 'Potatoes', 14)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -1152,7 +1152,7 @@ function loginSuccess(token, name, email) {
                 <h3>Green Peas</h3>
                 <p>1Kg - Rs. 50.00</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(50.00, 'Green Peas', 15)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -1177,7 +1177,7 @@ function loginSuccess(token, name, email) {
                 <h3>Radish</h3>
                 <p>4 pieces - Rs. 40.00</p>
                 <div class="stars">★★★★★</div>
-                <a href="cart.html" class="btn">Add to Cart</a>
+                <a href="{{ url_for('cart') }}" class="btn">Add to Cart</a>
  <button class="buy-now" onclick="openModal(40.00, 'Radish', 16)">Buy Now</button>
             <div class="poverlay" id="poverlay"></div>
 <div class="pmodal" id="pmodal">
@@ -1384,7 +1384,7 @@ async function confirmAddress(event) {
     .then(data => {
       if (data.status === "success") {
         alert("Order placed successfully! Arriving in 15 minutes... (continue to shop)");
-        window.location.href = "vegetable_newpage.html";
+        window.location.href = "{{ url_for('vegetable') }}";
       } else if (data.status === "out_of_range") {
         alert("You are out of range. Delivery is not possible yet there...");
       } else {

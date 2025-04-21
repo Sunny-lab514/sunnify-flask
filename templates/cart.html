@@ -30,8 +30,8 @@ nav {
 
 .search-container {
     display: flex;
-    align-items: center; /* सर्च आइकन और इनपुट को वर्टिकली सेंटर करें */
-    margin-right: -17px; /* थोड़ा दायां मार्जिन */
+    align-items: center; 
+    margin-right: -17px; 
 }
 
 .search-container input {
@@ -63,7 +63,7 @@ nav {
 
 
 header .cart-icon {
-    margin-left: 20px; /* सर्च आइकन और कार्ट के बीच थोड़ी जगह */
+    margin-left: 20px; 
 }
 
        header .logo {
@@ -78,11 +78,11 @@ header .cart-icon {
     display: flex;
     justify-content: center; /* Center alignment */
     gap: 20px;
-    flex-grow: 1; /* Nav को उपलब्ध space का उपयोग करने की अनुमति देगा */
+    flex-grow: 1; 
 }
 .actions {
     display: flex;
-    align-items: center; /* सर्च और कार्ट आइकन को वर्टिकली सेंटर करें */
+    align-items: center; 
     gap: 5px;}
 header {
     display: flex;
@@ -455,18 +455,18 @@ header {
     <header>
 <div class="logo">Sunnify</div>
 <nav>
-<a href="index.html">HOME</a>
-<a href="products_newpage.html">PRODUCTS</a>
-<a href="features_newpage.html">FEATURES</a>
-<a href="about_newpage.html">ABOUT US</a>
-<a href="feedback_newpage.html">FEEDBACK</a>
+<a href="{{ url_for('index') }}">HOME</a>
+<a href="{{ url_for('products') }}">PRODUCTS</a>
+<a href="{{ url_for('features') }}">FEATURES</a>
+<a href="{{ url_for('about') }}">ABOUT US</a>
+<a href="{{ url_for('feedback') }}">FEEDBACK</a>
 </nav>  
 <div class="actions">
         <div class="search-container">
             <input type="text" id="search-bar" placeholder="Search for products..." onkeyup="searchProducts()">
             <i class="fas fa-search" onclick="toggleSearchBar()"></i>
         </div>
-        <a href="cart.html" class="cart-icon">
+        <a href="{{ url_for('cart') }}" class="cart-icon">
             <img src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG38.png" alt="Cart Icon">
         </a>
 <a id="loginIcon" class="login-icon">
@@ -511,10 +511,10 @@ header {
         ];
 
         const categoryPages = {
-            vegetables: "vegetable_newpage.html",
-            fruits: "fruits_newpage.html",
-            cleaning: "cleaning_items_newpage.html",
-            bakery: "bakery_newpage.html",
+            vegetables: "{{ url_for('vegetable') }}",
+            fruits: "{{ url_for('fruits') }}",
+            cleaning: "{{ url_for('cleaning') }}",
+            bakery: "{{ url_for('bakery') }}",
             // Add more categories as needed
         };
 
@@ -592,7 +592,7 @@ function closeUserInfoModal() {
 function logout() {
   localStorage.clear();
   alert("You have been logged out.");
-  window.location.href = "index.html";
+  window.location.href = "{{ url_for('index') }}";
 }
 
 document.getElementById("loginBtn").addEventListener("click", handleLogin);
@@ -685,8 +685,8 @@ function loginSuccess(token, name, email) {
       console.error("Login success but user info fetch failed:", err);
       alert("Login incomplete. Please refresh page.");
     });
-}</script>
-
+}
+</script>
     <div class="container">
         <U><h2>Your Items in Cart</h2></U>
         <div id="cart-items">
@@ -941,7 +941,7 @@ async function confirmAddress(event) {
       if (data.status === "success") {
         alert("Order placed successfully! Arriving in 15 minutes...(continue to shop)");
         localStorage.removeItem("cart");
-        window.location.href = "cart.html";
+        window.location.href = "{{ url_for('cart') }}";
       } else if (data.status === "out_of_range") {
         alert("You are out of range. Delivery is not possible yet there...");
       } else {

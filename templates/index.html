@@ -367,18 +367,18 @@ header {
     <header>
         <div class="logo">Sunnify</div>
         <nav>
-<a href="index.html">HOME</a>
-<a href="products_newpage.html">PRODUCTS</a>
-<a href="features_newpage.html">FEATURES</a>
-<a href="about_newpage.html">ABOUT US</a>
-<a href="feedback_newpage.html">FEEDBACK</a>
+<a href="{{ url_for('index') }}">HOME</a>
+<a href="{{ url_for('products') }}">PRODUCTS</a>
+<a href="{{ url_for('features') }}">FEATURES</a>
+<a href="{{ url_for('about') }}">ABOUT US</a>
+<a href="{{ url_for('feedback') }}">FEEDBACK</a>
         </nav>
 <div class="actions">
         <div class="search-container">
             <input type="text" id="search-bar" placeholder="Search for products..." onkeyup="searchProducts(event)">
             <i class="fas fa-search" onclick="toggleSearchBar()"></i>
         </div>
-        <a href="cart.html" class="cart-icon">
+        <a href="{{ url_for('cart') }}" class="cart-icon">
             <img src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG38.png" alt="Cart Icon">
         </a>
 <a id="loginIcon" class="login-icon">
@@ -422,10 +422,10 @@ header {
         ];
 
         const categoryPages = {
-            vegetables: "vegetable_newpage.html",
-            fruits: "fruits_newpage.html",
-            cleaning: "cleaning_items_newpage.html",
-            bakery: "bakery_newpage.html",
+            vegetables: "{{ url_for('vegetable') }}",
+            fruits: "{{ url_for('fruits') }}",
+            cleaning: "{{ url_for('cleaning') }}",
+            bakery: "{{ url_for('bakery') }}",
             // Add more categories as needed
         };
 
@@ -472,57 +472,57 @@ const recommendedProducts = [
     {
         name: "Fresh Tomatoes",
         image: "https://images5.alphacoders.com/420/thumb-1920-420022.jpg", // Replace with actual image URLs
-        link: "vegetable_newpage.html"
+        link: "{{ url_for('vegetable') }}"
     },
     {
         name: "Organic Bananas",
         image: "https://purepng.com/public/uploads/large/purepng.com-bananafruitsyellowfruit-981524754330lspp8.png",
-        link: "fruits_newpage.html"
+        link: "{{ url_for('fruits') }}"
     },
     {
         name: "Premium Mangoes",
         image: "https://dryfruitsmandy.com/wp-content/uploads/2021/04/mango-medium.jpg",
-        link: "fruits_newpage.html"
+        link: "{{ url_for('fruits') }}"
     },
     {
         name: "Farm Fresh Radish",
         image: "https://wallpapercave.com/wp/wp8489719.jpg",
-        link: "vegetable_newpage.html"
+        link: "{{ url_for('vegetable') }}"
     },
     {
         name: "Juicy Watermelon",
         image: "https://wallpapercave.com/wp/wp3400769.jpg",
-        link: "fruits_newpage.html"
+        link: "{{ url_for('fruits') }}"
     },
     {
         name: "Eggless Cake",
         image: "https://product-assets.faasos.io/production/product/image_1657272196421_image_1635342896740_Rich_Red_Velvet_Pastry.jpg",
-        link: "bakery_newpage.html"
+        link: "{{ url_for('bakery') }}"
     },
     {
         name: "Full Cream Milk",
         image: "https://www.graceonline.in/uploads/products/2021/07/28/amul-masti-buttermilk-2001627467139.webp",
-        link: "bakery_newpage.html"
+        link: "{{ url_for('bakery') }}"
     },
     {
         name: "Dark Fantasy Choclate Shake",
         image: "https://www.queensleeappetit.com/wp-content/uploads/2020/10/classic-chocolate-milkshake-recipe-7-2.jpg",
-        link: "bakery_newpage.html"
+        link: "{{ url_for('bakery') }}"
     },
     {
         name: "Dettol-Safai",
         image: "https://aswaqrak.ae/pub/media/catalog/product/cache/9e61d75d633e5fc1a695bad0376a2475/6/2/6295120042069_2.jpg",
-        link: "cleaning_items_newpage.html"
+        link: "{{ url_for('cleaning') }}"
     },
     {
         name: "Chmkaye Naye Jaisa",
         image: "https://media.jointlook.com/customPhotos/productImages/colin-glass-surface-cleaner-liquid-spray-JLHGCL250-01.jpg",
-        link: "cleaning_items_newpage.html"
+        link: "{{ url_for('cleaning') }}"
     },
      {
         name: "Kill Mosquito at Once ",
         image: "https://5.imimg.com/data5/PC/SU/QU/SELLER-8586032/good-night-power-activ-1000x1000.png",
-        link: "cleaning_items_newpage.html"
+        link: "{{ url_for('cleaning') }}"
     },
 ];
 
@@ -585,7 +585,7 @@ function closeUserInfoModal() {
 function logout() {
   localStorage.clear();
   alert("You have been logged out.");
-  window.location.href = "index.html";
+  window.location.href = "{{ url_for('index') }}";
 }
 
 document.getElementById("loginBtn").addEventListener("click", handleLogin);

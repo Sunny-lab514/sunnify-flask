@@ -331,18 +331,18 @@ header {
     <header>
         <div class="logo">Sunnify</div>
 <nav>
-<a href="index.html">HOME</a>
-<a href="products_newpage.html">PRODUCTS</a>
-<a href="features_newpage.html">FEATURES</a>
-<a href="about_newpage.html">ABOUT US</a>
-<a href="feedback_newpage.html">FEEDBACK</a>
+<a href="{{ url_for('index') }}">HOME</a>
+<a href="{{ url_for('products') }}">PRODUCTS</a>
+<a href="{{ url_for('features') }}">FEATURES</a>
+<a href="{{ url_for('about') }}">ABOUT US</a>
+<a href="{{ url_for('feedback') }}">FEEDBACK</a>
 </nav>    
 <div class="actions">
         <div class="search-container">
             <input type="text" id="search-bar" placeholder="Search for products..." onkeyup="searchProducts()">
             <i class="fas fa-search" onclick="toggleSearchBar()"></i>
         </div>
-        <a href="cart.html" class="cart-icon">
+        <a href="{{ url_for('cart') }}" class="cart-icon">
             <img src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG38.png" alt="Cart Icon">
         </a>
 <a id="loginIcon" class="login-icon">
@@ -386,10 +386,10 @@ header {
         ];
 
         const categoryPages = {
-            vegetables: "vegetable_newpage.html",
-            fruits: "fruits_newpage.html",
-            cleaning: "cleaning_items_newpage.html",
-            bakery: "bakery_newpage.html",
+            vegetables: "{{ url_for('vegetable') }}",
+            fruits: "{{ url_for('fruits') }}",
+            cleaning: "{{ url_for('cleaning') }}",
+            bakery: "{{ url_for('bakery') }}",
             // Add more categories as needed
         };
 
@@ -467,7 +467,7 @@ function closeUserInfoModal() {
 function logout() {
   localStorage.clear();
   alert("You have been logged out.");
-  window.location.href = "index.html";
+  window.location.href = "{{ url_for('index') }}";
 }
 
 document.getElementById("loginBtn").addEventListener("click", handleLogin);
@@ -569,25 +569,25 @@ function loginSuccess(token, name, email) {
                 <img src="https://images.alphacoders.com/453/453933.jpg" alt="Vegetables">
                 <h3>Vegetables</h3>
                 <p>Upto 25% Off</p>
-                <a href="vegetable_newpage.html">Shop Now</a>
+                <a href="{{ url_for('vegetable') }}">Shop Now</a>
             </div>
             <div class="category">
                 <img src="https://www.pngmart.com/files/17/Fresh-Fruits-PNG-Image.png" alt="Fruits">
                 <h3>Fruits</h3>
                 <p>Upto 25% Off</p>
-                <a href="fruits_newpage.html">Shop Now</a>
+                <a href="{{ url_for('fruits') }}">Shop Now</a>
             </div>
             <div class="category">
                 <img src="https://fairo.pk/wp-content/uploads/2019/09/bakery.jpeg" alt="Bakery & Dairy Products">
                 <h3>Bakery & Dairy Products</h3>
                 <p>Upto 15% Off</p>
-                <a href="bakery_newpage.html">Shop Now</a>
+                <a href="{{ url_for('bakery') }}">Shop Now</a>
             </div>
             <div class="category">
                 <img src="https://www.moneycrashers.com/wp-content/uploads/2019/01/save-money-household-cleaning-products.jpg" alt="Cleaning & Household">
                 <h3>Cleaning & Household</h3>
                 <p>Upto 20% Off</p>
-                <a href="cleaning_items_newpage.html">Shop Now</a>
+                <a href="{{ url_for('cleaning') }}">Shop Now</a>
             </div>
         </div>
     </div>

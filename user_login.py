@@ -39,7 +39,36 @@ bcrypt = Bcrypt(app)
 @app.route('/')
 def home():
     return render_template("index.html")
-
+@app.route("/about")
+def about():
+    return render_template("about_newpage.html")
+@app.route("/bakery")
+def bakery():
+    return render_template("bakery_newpage.html")
+@app.route("/cart")
+def cart():
+    return render_template("cart.html")
+@app.route("/cleaning")
+def cleaning():
+    return render_template("cleaning_items_newpage.html")
+@app.route("/features")
+def features():
+    return render_template("features_newpage.html")
+@app.route("/feedback")
+def feedback():
+    return render_template("feedback_newpage.html")
+@app.route("/fruits")
+def fruits():
+    return render_template("fruits_newpage.html")
+@app.route("/products")
+def products():
+    return render_template("products_newpage.html")
+@app.route("/index")
+def index():
+    return render_template("index.html")
+@app.route("/vegetable")
+def vegetable():
+    return render_template("vegetable_newpage.html")
 # 🔹 User Registration API
 @app.route('/register', methods=['POST'])
 def register():

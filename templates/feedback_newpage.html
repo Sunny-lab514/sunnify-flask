@@ -572,7 +572,7 @@ function handleLogin() {
     return;
   }
 
-  fetch("http://localhost:5000/api/login", {
+  fetch("/api/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -601,7 +601,7 @@ function signupUser(email, password) {
 
   name = name.trim();
 
-  fetch("http://localhost:5000/api/signup", {
+  fetch("/api/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, name }),
@@ -610,7 +610,7 @@ function signupUser(email, password) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Signup failed");
       alert("Signup Successful! Logging you in...");
-      return fetch("http://localhost:5000/api/login", {
+      return fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -629,7 +629,7 @@ function loginSuccess(token, name, email) {
   localStorage.setItem("name", name);
   localStorage.setItem("email", email); // Save email for later fetch
 
-  fetch("http://localhost:5000/api/get_user_by_token", {
+  fetch("/api/get_user_by_token", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ token, email }),
@@ -659,7 +659,7 @@ function loginSuccess(token, name, email) {
     const email = document.getElementById("feedback-email").value.trim();
     const message = document.getElementById("message").value.trim();
 
-    fetch("http://localhost:5000/submit_feedback", {
+    fetch("/submit_feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullname, email, message }),
@@ -685,7 +685,7 @@ document.getElementById("closeModal").addEventListener("click", () => {
         document.getElementById("feedbackNewsletterForm").addEventListener("submit", function (e) {
                 e.preventDefault();
                 const email = document.getElementById("newsletter-email").value.trim();
-                fetch("http://localhost:5000/subscribe", {
+                fetch("/subscribe", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email }),

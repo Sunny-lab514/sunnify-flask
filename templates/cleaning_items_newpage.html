@@ -664,7 +664,7 @@ function handleLogin() {
     return;
   }
 
-  fetch("http://localhost:5000/api/login", {
+  fetch("/api/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -693,7 +693,7 @@ function signupUser(email, password) {
 
   name = name.trim();
 
-  fetch("http://localhost:5000/api/signup", {
+  fetch("/api/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, name }),
@@ -702,7 +702,7 @@ function signupUser(email, password) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Signup failed");
       alert("Signup Successful! Logging you in...");
-      return fetch("http://localhost:5000/api/login", {
+      return fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -721,7 +721,7 @@ function loginSuccess(token, name, email) {
   localStorage.setItem("name", name);
   localStorage.setItem("email", email); //  Save email for later fetch
 
-  fetch("http://localhost:5000/api/get_user_by_token", {
+  fetch("/api/get_user_by_token", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ token, email }),
@@ -1313,7 +1313,7 @@ async function confirmAddress(event) {
   //  WAIT LOOP for user_id if it's missing
   if (token && (!user_id || !user_email)) {
     try {
-      const res = await fetch("http://localhost:5000/api/get_user_by_token", {
+      const res = await fetch("/api/get_user_by_token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, email: user_email }),
@@ -1368,7 +1368,7 @@ async function confirmAddress(event) {
     user_email: localStorage.getItem("email"),
     user_id: localStorage.getItem("user_id")
   };
-    fetch("http://localhost:5000/confirm_order", {
+    fetch("/confirm_order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
@@ -1395,7 +1395,7 @@ window.onload = function () {
   const email = localStorage.getItem("email");
 
   if (token && email) {
-    fetch("http://localhost:5000/api/get_user_by_token", {
+    fetch("/api/get_user_by_token", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, email }),

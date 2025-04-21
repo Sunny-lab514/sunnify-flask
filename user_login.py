@@ -426,11 +426,6 @@ def buy_now(product_id):
     session['selected_product_id'] = product_id
     session['selected_quantity'] = request.args.get('qty')  # if from cart.html
     return render_template('address_modal.html')
-
-#Products API
-@app.route('/products')
-def products():
-    return render_template("vegetable_newpage.html")
 #get_user_by_token 
 @app.route("/api/get_user_by_token", methods=["POST"])
 def get_user_by_token():
